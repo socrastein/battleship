@@ -4,9 +4,31 @@
 }
 
 #mainContainer {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#topBarContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  padding: 4px 32px;
+}
+
+#topBarGameTitle {
+  font-size: .8rem;
+}
+
+.topBarItem {
+  width: 33%;
+  display: flex;
+  justify-content: center;
 }
 
 #gridContainer {
+  max-height: 85vh;
+  
   display: flex;
   flex-direction: column;
   padding: 3% 5%;
@@ -15,8 +37,6 @@
     0deg,
     rgba(8, 8, 100, .8), 
     rgba(8, 50, 150, .5));
-
-  border-radius: 0 0 16px 16px;
 }
 
 .rowContainer {
@@ -33,9 +53,13 @@
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  width: min(8vw, 50px);
+  width: min(6vw, 50px);
   aspect-ratio: 1;
 
-  font-size: .75rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, .75)
+}
+
+#lowBarContainer {
+  max-height: 10vh;
 }
