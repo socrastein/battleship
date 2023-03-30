@@ -1,11 +1,14 @@
 export default function newGame(){
-  getFirstName: () =>{
+  const getFirstName = () =>{
     return "Matt";
   }
 
-  getSecondName: () =>{
+  const getSecondName = () =>{
     return "Summer";
   }
 
+ 
+
   return {getFirstName, getSecondName};
+
 }
