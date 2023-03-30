@@ -1,3 +1,5 @@
+import squareClicked from "./squareClicked";
+
 export default function createGrid (){
   const letters = "ABCDEFGHIJ";
   const gridContainer = document.getElementById("gridContainer");
@@ -12,6 +14,7 @@ export default function createGrid (){
       newGridSquare.classList.add("gridSquare");
       newGridSquare.id = `${letters[i]}${j}`;
       newGridSquare.innerText = newGridSquare.id;
+      newGridSquare.addEventListener("click", squareClicked);
       rowContainer.appendChild(newGridSquare);
     }
     gridContainer.appendChild(rowContainer);
