@@ -1,6 +1,14 @@
+:root {
+  --white: 245, 245, 245;
+  --black: 45, 45, 45;
+}
+
 * {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  color: rgb(var(--black));
+  background-color: transparent;
 }
 
 @keyframes spinning {
@@ -13,28 +21,9 @@
 }
 
 #mainContainer {
-  max-height: 100vh;
+  max-height: 100dvh;
+  max-width: 100dvw;
   display: flex;
   flex-direction: column;
-}
-
-#topBarContainer {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-evenly;
-  padding: 4px 32px;
-}
-
-#topBarGameTitle {
-  font-size: .8rem;
-}
-
-.topBarItem {
-  width: 33%;
-  display: flex;
-  justify-content: center;
-}
-
-#lowBarContainer {
-  max-height: 10vh;
+  background-color: rgb(var(--white));
 }
