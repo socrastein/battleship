@@ -1,9 +1,6 @@
-import "./style.css";
-// IMPORTING IMAGES:
-// import MyImage from './my-image.png'
-
-import createGrid from "./gameGrid";
+import "./style.css"
+import { createStartScreen } from "./display/startScreen";
 
 const mainContainer = document.getElementById("mainContainer");
 
-mainContainer.append(createGrid())
+mainContainer.append(createStartScreen())
