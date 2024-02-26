@@ -1,0 +1,63 @@
+#startContainer {
+  height: 100dvh;
+  width: 100dvw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+
+  background-image: linear-gradient(lightblue, blue);
+}
+
+#startTitleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#startImage {
+  max-width: 100%;
+}
+
+#startTitle {
+  text-align: center;
+  font-size: 2.5rem;
+  background-color: rgba(var(--white), 0.4);
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  width: fit-content;
+}
+
+#startInputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+#startNewButton {
+  height: 4rem;
+  width: 12rem;
+  background-color: lightblue;
+
+  border: none;
+  border-radius: 1rem;
+
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#startInputLabel {
+  font-size: 1.25rem;
+}
+
+#startInputField {
+  text-align: center;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: rgba(var(--white), 0.75);
+}
