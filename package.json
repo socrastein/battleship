@@ -28,6 +28,7 @@
     "xml-loader": "^1.2.1"
   },
   "dependencies": {
+    "jest": "^29.7.0",
     "source-map-loader": "^5.0.0"
   }
 }
