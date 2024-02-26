@@ -2,16 +2,8 @@ import "./style.css";
 // IMPORTING IMAGES:
 // import MyImage from './my-image.png'
 
-import createGrid from "./grid";
-import createTopBar from "./topBar";
-import squareClicked from "./squareClicked";
-import gameState from "./gameState";
-import loadingScreen from "./loadingScreen";
+import createGrid from "./gameGrid";
 
-createTopBar();
-createGrid();
-const game = gameState();
-game.logGameStage();
-game.changeGameStage(3);
-loadingScreen.loadingScreenStart();
+const mainContainer = document.getElementById("mainContainer");
 
+mainContainer.append(createGrid())
