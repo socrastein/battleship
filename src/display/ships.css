@@ -1,0 +1,26 @@
+#shipPlacementContainer {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.shipContainer {
+    display: flex;
+    justify-content: center;
+    height: 3rem;
+}
+
+.ship {
+    position: absolute;
+    background-color: grey;
+    border-radius: 1rem;
+}
+
+#Carrier{
+    height: 32px;
+    width: 160px;
+}
+#Battleship{}
+#Destroyer{}
+#Submarine{}
+#PatrolBoat{}
