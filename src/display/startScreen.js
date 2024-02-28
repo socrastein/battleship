@@ -83,13 +83,11 @@ const displayNameInput = function (playerNumber) {
 const enterPlayerName = function (name) {
   if (gameState.player1Name === undefined) {
     gameState.player1Name = name;
-    gameState.player1Board = new GameBoard(name);
     displayNameInput(2);
     return;
   }
   if (gameState.player2Name === undefined) {
     gameState.player2Name = name;
-    gameState.player1Board = new GameBoard(name);
     startGame();
   }
 };
