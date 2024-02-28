@@ -19,10 +19,10 @@ const isMobile = () => {
   } else return false;
 };
 
-if(isMobile){
+if(isMobile()){
     gameState.isMobile = true;
 } else {
     gameState.isMobile = false;
 }
-
+console.log("Mobile: " + gameState.isMobile);
 startGame(true);
