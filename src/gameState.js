@@ -1,4 +1,5 @@
 const gameState = {
+  isMobile: undefined,
   player1Name: undefined,
   player1Board: undefined,
 
@@ -9,6 +10,7 @@ const gameState = {
 };
 
 //Gameboard objects
+//#region
 
 const GameBoard = function (ownerName) {
   this.owner = ownerName;
@@ -51,7 +53,10 @@ GameBoard.prototype.shipsAreSunk = function () {
   return true;
 };
 
+//#endregion
+
 //Ship objects
+//#region
 
 const Ship = function (name, size) {
   this.name = name;
@@ -77,5 +82,7 @@ Ship.prototype.setLocation = function (squares) {
   }
   this.squares = [...squares];
 };
+
+//#endregion
 
 module.exports = { Ship, GameBoard, gameState };
