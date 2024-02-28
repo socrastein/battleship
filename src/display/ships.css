@@ -1,26 +1,41 @@
 #shipPlacementContainer {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#placeShipText {
+  text-align: center;
 }
 
 .shipContainer {
-    display: flex;
-    justify-content: center;
-    height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
 }
 
 .ship {
-    position: absolute;
-    background-color: grey;
-    border-radius: 1rem;
+  position: absolute;
+  background-color: grey;
+  border-radius: 1rem;
+  border: solid black 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
 }
 
-#Carrier{
-    height: 32px;
-    width: 160px;
+#Carrier {
+  height: 32px;
+  width: 160px;
 }
-#Battleship{}
-#Destroyer{}
-#Submarine{}
-#PatrolBoat{}
+#Battleship {
+}
+#Destroyer {
+}
+#Submarine {
+}
+#Patrol {
+}
