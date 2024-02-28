@@ -27,6 +27,15 @@
   font-size: .75rem;
 }
 
+.vertical{
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.occupied {
+
+}
+
 #Carrier {
   height: 32px;
   width: 160px;
