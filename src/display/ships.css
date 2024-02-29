@@ -26,11 +26,13 @@
   justify-content: center;
   font-size: .75rem;
   user-select: none;
+  overflow: hidden;
 }
 
 .vertical{
   writing-mode: vertical-rl;
   text-orientation: upright;
+  font-kerning: normal;
 }
 
 .occupied {

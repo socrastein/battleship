@@ -4,22 +4,27 @@ import "./ships.css";
 const ships = [
   {
     name: "Carrier",
+    short: "Carrier",
     size: 5,
   },
   {
     name: "Battleship",
+    short: "Battle",
     size: 4,
   },
   {
     name: "Destroyer",
+    short: "Destroy",
     size: 3,
   },
   {
     name: "Submarine",
+    short: "Sub",
     size: 3,
   },
   {
     name: "Patrol",
+    short: "Boat",
     size: 2,
   },
 ];
@@ -52,9 +57,9 @@ export const placeableShips = function () {
 
     ship.id = ships[i].name;
     ship.size = ships[i].size;
+    ship.index = i;
 
     ship.addEventListener("dblclick", (event) => {
-      event.preventDefault();
       toggleShipVertical(ship);
     });
 
@@ -71,13 +76,14 @@ export const toggleShipVertical = function (ship) {
   if (ship.classList.contains("vertical")) {
     ship.style.height = `${width * 0.8}px`;
     ship.style.width = `${width * ship.size * 0.9}px`;
+    ship.innerText = ships[ship.index].name;
     ship.classList.remove("vertical");
   } else {
     ship.style.height = `${width * ship.size * 0.9}px`;
     ship.style.width = `${width * 0.8}px`;
+    ship.innerText = ships[ship.index].short;
     ship.classList.add("vertical");
   }
-  snapToClosestSquare()
 };
 
 export const setShipDimensions = function () {
