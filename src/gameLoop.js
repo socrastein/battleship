@@ -1,6 +1,6 @@
 import { gameState, GameBoard } from "./gameState";
 import createGrid from "./display/gameGrid";
-import { placeableShips, setShipDimensions } from "./display/ships";
+import { displayPlaceableShips, setShipDimensions } from "./display/ships";
 
 const mainContainer = document.getElementById("mainContainer");
 
@@ -14,9 +14,10 @@ export const startGame = function (test = false) {
   console.log(`Player 2: ${gameState.player2Name}`);
   gameState.player1Board = new GameBoard(gameState.player1Name);
   gameState.player1Board = new GameBoard(gameState.player2Name);
+  gameState.playerTurn = 1;
 
   mainContainer.append(createGrid());
-  mainContainer.append(placeableShips())
+  mainContainer.append(displayPlaceableShips())
   setShipDimensions();
 
 };
@@ -24,4 +25,5 @@ export const startGame = function (test = false) {
 export const squareClicked = function (squareID) {
   const square = document.getElementById(squareID);
 };
+
 const gameLoop = function () {};
