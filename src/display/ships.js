@@ -77,6 +77,7 @@ export const toggleShipVertical = function (ship) {
     ship.style.width = `${width * 0.8}px`;
     ship.classList.add("vertical");
   }
+  snapToClosestSquare()
 };
 
 export const setShipDimensions = function () {
@@ -107,7 +108,7 @@ function makeShipDraggable(ship) {
 
   function dragMouseDown(event) {
     event = event || window.event;
-    event.preventDefault();
+    // event.preventDefault();
     if (mobile) {
       pos3 = event.touches[0].pageX;
       pos4 = event.touches[0].pageY;
