@@ -111,7 +111,7 @@ function makeShipDraggable(ship) {
 
   function dragMouseDown(event) {
     event = event || window.event;
-    event.preventDefault();
+    // event.preventDefault();
     if (mobile) {
       pos3 = event.touches[0].pageX;
       pos4 = event.touches[0].pageY;
@@ -191,7 +191,6 @@ function makeShipDraggable(ship) {
     let offsetY;
 
     let square = document.elementFromPoint(ship.offsetLeft, ship.offsetTop);
-    console.log(square.classList.contains("gridSquare"));
     if (square === null || !square.classList.contains("gridSquare")) {
       if (ship.classList.contains("vertical")) {
         toggleShipVertical(ship);
