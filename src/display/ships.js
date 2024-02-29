@@ -53,15 +53,11 @@ export const placeableShips = function () {
     ship.id = ships[i].name;
     ship.size = ships[i].size;
 
-    if (mobile) {
-      ship.addEventListener("contextmenu", () => {
-        toggleShipVertical(ship);
-      });
-    } else {
-      ship.addEventListener("dblclick", () => {
-        toggleShipVertical(ship);
-      });
-    }
+    ship.addEventListener("dblclick", (event) => {
+      event.preventDefault();
+      toggleShipVertical(ship);
+    });
+
     shipContainer.append(ship);
     shipPlacementContainer.append(shipContainer);
   }
@@ -111,7 +107,7 @@ function makeShipDraggable(ship) {
 
   function dragMouseDown(event) {
     event = event || window.event;
-    // event.preventDefault();
+    event.preventDefault();
     if (mobile) {
       pos3 = event.touches[0].pageX;
       pos4 = event.touches[0].pageY;
