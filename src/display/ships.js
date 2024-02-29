@@ -186,7 +186,9 @@ function makeShipDraggable(ship) {
     document.onmousemove = null;
     document.ontouchend = null;
     document.ontouchmove = null;
-    snapToClosestSquare();
+    setTimeout(() => {
+      snapToClosestSquare();
+    }, 25);
   }
 
   function snapToClosestSquare() {

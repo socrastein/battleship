@@ -32,7 +32,7 @@
 .vertical{
   writing-mode: vertical-rl;
   text-orientation: upright;
-  font-kerning: normal;
+  letter-spacing: -1px;
 }
 
 .occupied {
