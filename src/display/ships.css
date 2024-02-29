@@ -41,6 +41,10 @@
   background-color: rgba(var(--white), 0.5);
 }
 
+.invalid {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
 #Carrier {
   border-radius: 15% 0 50% 15%;
 }

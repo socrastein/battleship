@@ -6,7 +6,7 @@ const gameState = {
   player2Name: undefined,
   player2Board: undefined,
 
-  playerTurn: undefined,
+  playerTurnNum: undefined,
 };
 
 //Gameboard objects

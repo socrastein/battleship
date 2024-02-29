@@ -13,8 +13,8 @@ export const startGame = function (test = false) {
   console.log(`Player 1: ${gameState.player1Name}`);
   console.log(`Player 2: ${gameState.player2Name}`);
   gameState.player1Board = new GameBoard(gameState.player1Name);
-  gameState.player1Board = new GameBoard(gameState.player2Name);
-  gameState.playerTurn = 1;
+  gameState.player2Board = new GameBoard(gameState.player2Name);
+  gameState.playerTurnNum = 1;
 
   mainContainer.append(createGrid());
   mainContainer.append(displayPlaceableShips())

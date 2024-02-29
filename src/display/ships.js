@@ -233,7 +233,6 @@ const makeShipDraggable = function (ship) {
     ship.style.top = square.offsetTop + offsetY + "px";
     ship.style.left = square.offsetLeft + offsetX + "px";
     ship.headSquare = square;
-    console.log(ship.headSquare);
     removeHighlight();
     validateShipPlacement();
   }
@@ -251,39 +250,65 @@ const clearOccupiedSquares = function () {
   for (let i = 0; i < length; i++) {
     const square = occupiedSquares[i];
     square.classList.remove("occupied");
-    square.classList.remove("highlightError");
+    square.classList.remove("invalid");
   }
 };
 
 const validateShipPlacement = function () {
   clearOccupiedSquares();
+  let allShipsPlaced = true;
   const ships = document.querySelectorAll(".ship");
   const length = ships.length;
+
   for (let i = 0; i < length; i++) {
     const ship = ships[i];
-    let square;
-    if (ship.headSquare) {
-      square = ship.headSquare;
-    } else continue;
-    const column = parseInt(square.id.slice(1));
-    const rowIndex = rows.indexOf(square.id[0]);
+    if (!ship.headSquare) {
+      allShipsPlaced = false;
+      continue;
+    }
 
-    for (let j = 0; j < ship.size; j++) {
-      let occupied;
-      //Set ships along vertical line to occupied
-      if (ship.classList.contains("vertical")) {
-        occupied = document.getElementById(`${rows[rowIndex + j]}${column}`);
-        //Set ships along horizontal line to occupied
+    const squares = getShipSquares(ship);
+
+    squares.forEach((square) => {
+      const element = document.getElementById(square);
+      if (element.classList.contains("occupied")) {
+        element.classList.add("invalid");
+        allShipsPlaced = false;
       } else {
-        occupied = document.getElementById(`${rows[rowIndex]}${column + j}`);
+        element.classList.add("occupied");
       }
-      //Check if another ship is occupying same space
-      if (occupied.classList.contains("occupied")) {
-        occupied.classList.remove("occupied");
-        occupied.classList.add("highlightError");
-      } else {
-        occupied.classList.add("occupied");
-      }
+    });
+  }
+  if (allShipsPlaced) {
+    console.log("All ships placed");
+    setShipCoordinates();
+  }
+};
+
+const setShipCoordinates = function () {
+  const ships = document.querySelectorAll(".ship");
+  const length = ships.length;
+  const playerNum = gameState.playerTurnNum;
+
+  for (let i = 0; i < length; i++) {
+    const ship = ships[i];
+    const squares = getShipSquares(ship);
+    gameState[`player${playerNum}Board`].addShip(ship.id, ship.size, squares);
+  }
+  console.log(gameState[`player${playerNum}Board`]);
+};
+
+const getShipSquares = function (ship) {
+  if (!ship.headSquare) return null;
+  const squares = [];
+  const column = parseInt(ship.headSquare.id.slice(1));
+  const rowIndex = rows.indexOf(ship.headSquare.id[0]);
+  for (let j = 0; j < ship.size; j++) {
+    if (ship.classList.contains("vertical")) {
+      squares.push(document.getElementById(`${rows[rowIndex + j]}${column}`).id);
+    } else {
+      squares.push(document.getElementById(`${rows[rowIndex]}${column + j}`).id);
     }
   }
+  return squares;
 };
