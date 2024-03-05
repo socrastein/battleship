@@ -142,7 +142,7 @@ const makeShipDraggable = function (ship) {
   });
 
   function dragMouseDown(event) {
-    event.preventDefault();
+    // event.preventDefault();
     if (mobile) {
       pos3 = event.touches[0].pageX;
       pos4 = event.touches[0].pageY;
