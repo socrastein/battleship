@@ -1,7 +1,8 @@
 import { gameState } from "../gameState";
+import { displayPassScreen } from "./passScreen";
 import "./ships.css";
 
-const shipObjects = [
+export const shipObjects = [
   {
     name: "Carrier",
     short: "Carrier",
@@ -44,69 +45,93 @@ const displayPlacingInstruction = function () {
   return placeShipText;
 };
 
+export const createShip = function (shipObject, index, text = true) {
+  const ship = document.createElement("div");
+  ship.classList.add(`ship`, `${shipObject.name}`);
+  if (text) ship.innerText = shipObject.name;
+
+  ship.name = shipObject.name;
+  ship.size = shipObject.size;
+  ship.index = index;
+
+  return ship;
+};
+
 export const displayPlaceableShips = function () {
+  const mainContainer = document.getElementById("mainContainer");
   const shipPlacementContainer = document.createElement("div");
   shipPlacementContainer.id = "shipPlacementContainer";
 
   shipPlacementContainer.append(displayPlacingInstruction());
+
+  const ships = [];
 
   const length = shipObjects.length;
   for (let i = 0; i < length; i++) {
     const shipContainer = document.createElement("div");
     shipContainer.classList.add("shipContainer");
 
-    const ship = document.createElement("div");
-    ship.classList.add("ship");
-    ship.innerText = shipObjects[i].name;
-
-    ship.id = shipObjects[i].name;
-    ship.size = shipObjects[i].size;
-    ship.index = i;
+    const ship = createShip(shipObjects[i], i);
 
     ship.addEventListener("dblclick", (event) => {
       toggleShipVertical(ship);
     });
 
+    ships.push(ship);
+
     shipContainer.append(ship);
     shipPlacementContainer.append(shipContainer);
   }
-  return shipPlacementContainer;
+
+  mainContainer.append(shipPlacementContainer);
+  ships.forEach((ship) => {
+    setShipDimensions(ship);
+    makeShipDraggable(ship);
+    ship.origX = ship.getBoundingClientRect().left;
+    ship.origY = ship.getBoundingClientRect().top;
+  });
+
+  window.onresize = () => {
+    const allShips = document.querySelectorAll(".ship");
+    const len = allShips.length;
+    for (let i = 0; i < len; i++) {
+      if (allShips[i].headSquare) {
+        const ref = document.getElementById(`${allShips[i].headSquare.id}`);
+        snapToClosestSquare(allShips[i], ref);
+      }
+    }
+  };
 };
 
 export const toggleShipVertical = function (ship) {
-  const gridSquare = document.getElementById("A1");
-  const width = gridSquare.offsetWidth;
-
   if (ship.classList.contains("vertical")) {
     ship.classList.remove("vertical");
-    ship.style.height = `${width * 0.8}px`;
-    ship.style.width = `${width * ship.size * 0.9}px`;
     ship.innerText = shipObjects[ship.index].name;
   } else {
     ship.classList.add("vertical");
-    ship.style.height = `${width * ship.size * 0.9}px`;
-    ship.style.width = `${width * 0.8}px`;
     ship.innerText = shipObjects[ship.index].short;
   }
+
+  setShipDimensions(ship);
 };
 
-export const setShipDimensions = function () {
-  const gridSquare = document.getElementById("A1");
-  const width = gridSquare.offsetWidth;
-  const shipElements = document.querySelectorAll(".ship");
-  const length = shipElements.length;
-
-  for (let i = 0; i < length; i++) {
-    const ship = shipElements[i];
+export const setShipDimensions = function (ship, reference) {
+  let width;
+  if (reference) {
+    width = reference.offsetWidth;
+  } else {
+    width = document.getElementById("A1").offsetWidth;
+  }
+  if (ship.classList.contains("vertical")) {
+    ship.style.height = `${width * ship.size * 0.9}px`;
+    ship.style.width = `${width * 0.8}px`;
+  } else {
     ship.style.height = `${width * 0.8}px`;
-    ship.style.width = `${width * shipObjects[i].size * 0.9}px`;
-    makeShipDraggable(ship);
+    ship.style.width = `${width * ship.size * 0.9}px`;
   }
 };
 
 const makeShipDraggable = function (ship) {
-  const origX = ship.getBoundingClientRect().left;
-  const origY = ship.getBoundingClientRect().top;
   let pos1 = 0,
     pos2 = 0,
     pos3 = 0,
@@ -117,8 +142,7 @@ const makeShipDraggable = function (ship) {
   });
 
   function dragMouseDown(event) {
-    event = event || window.event;
-    // event.preventDefault();
+    event.preventDefault();
     if (mobile) {
       pos3 = event.touches[0].pageX;
       pos4 = event.touches[0].pageY;
@@ -154,94 +178,99 @@ const makeShipDraggable = function (ship) {
     ship.style.left = ship.offsetLeft - pos1 + "px";
   }
 
-  function highlightGrid() {
-    removeHighlight();
-    const square = document.elementFromPoint(ship.offsetLeft, ship.offsetTop);
-    if (square === null) return;
-    if (!square.classList.contains("gridSquare")) return;
-    let limit;
-    if (ship.classList.contains("vertical")) {
-      //Get row letter
-      let row = square.id[0];
-      limit = rows.indexOf(row);
-    } else {
-      //Get column number
-      limit = square.id.slice(1);
-    }
-
-    if (limit <= 11 - ship.size) {
-      //Valid square to place ship
-      square.classList.add("highlight");
-    } else {
-      //Invalid square to place ship
-      square.classList.add("highlightError");
-    }
-  }
-
-  function removeHighlight() {
-    const previous = document.getElementsByClassName("highlight");
-    if (previous.length > 0) previous[0].classList.remove("highlight");
-    const errors = document.getElementsByClassName("highlightError");
-    if (errors.length > 0) errors[0].classList.remove("highlightError");
-  }
-
   function closeDragElement() {
     document.onmouseup = null;
     document.onmousemove = null;
     document.ontouchend = null;
     document.ontouchmove = null;
     setTimeout(() => {
-      snapToClosestSquare();
+      snapToClosestSquare(ship);
     }, 100);
   }
+};
 
-  function snapToClosestSquare() {
-    let offsetX;
-    let offsetY;
+const highlightGrid = function (ship) {
+  removeHighlight();
+  const square = document.elementFromPoint(ship.offsetLeft, ship.offsetTop);
+  if (square === null) return;
+  if (!square.classList.contains("gridSquare")) return;
+  let limit;
+  if (ship.classList.contains("vertical")) {
+    //Get row letter
+    let row = square.id[0];
+    limit = rows.indexOf(row);
+  } else {
+    //Get column number
+    limit = square.id.slice(1);
+  }
 
-    let square = document.elementFromPoint(ship.offsetLeft, ship.offsetTop);
-    if (square === null || !square.classList.contains("gridSquare")) {
-      if (ship.classList.contains("vertical")) {
-        toggleShipVertical(ship);
-      }
-      returnShipToOriginalPosition();
-      validateShipPlacement();
-      return;
-    }
+  if (limit <= 11 - ship.size) {
+    //Valid square to place ship
+    square.classList.add("highlight");
+  } else {
+    //Invalid square to place ship
+    square.classList.add("highlightError");
+  }
+};
 
-    highlightGrid();
+const removeHighlight = function () {
+  const previous = document.getElementsByClassName("highlight");
+  if (previous.length > 0) previous[0].classList.remove("highlight");
+  const errors = document.getElementsByClassName("highlightError");
+  if (errors.length > 0) errors[0].classList.remove("highlightError");
+};
 
+export const snapToClosestSquare = function (ship, square, small = false) {
+  let offsetX;
+  let offsetY;
+
+  if (!square) {
+    square = document.elementFromPoint(ship.offsetLeft, ship.offsetTop);
+  }
+  if (square === null || !square.classList.contains("gridSquare")) {
     if (ship.classList.contains("vertical")) {
-      offsetX = ship.offsetWidth * 0.1;
-      offsetY = ship.offsetHeight * 0.05;
-    } else {
-      offsetX = ship.offsetWidth * 0.05;
-      offsetY = ship.offsetHeight * 0.1;
+      toggleShipVertical(ship);
     }
+    returnShipToOriginalPosition(ship);
+    validateShipPlacement();
+    return;
+  }
 
-    if (square.classList.contains("highlightError")) {
-      const column = square.id.slice(1);
-      const row = square.id[0];
-      if (ship.classList.contains("vertical")) {
-        //Get closest valid square on that column
-        square = document.getElementById(`${rows[11 - ship.size]}${column}`);
-      } else {
-        //Get closest valid square on that row
-        square = document.getElementById(`${row}${11 - ship.size}`);
-      }
+  highlightGrid(ship);
+
+  if (ship.classList.contains("vertical")) {
+    offsetX = ship.offsetWidth * 0.1;
+    offsetY = ship.offsetHeight * 0.05;
+  } else {
+    offsetX = ship.offsetWidth * 0.05;
+    offsetY = ship.offsetHeight * 0.1;
+  }
+
+  if (square.classList.contains("highlightError")) {
+    const column = square.id.slice(1);
+    const row = square.id[0];
+    if (ship.classList.contains("vertical")) {
+      //Get closest valid square on that column
+      square = document.getElementById(`${rows[11 - ship.size]}${column}`);
+    } else {
+      //Get closest valid square on that row
+      square = document.getElementById(`${row}${11 - ship.size}`);
     }
-    ship.style.top = square.offsetTop + offsetY + "px";
-    ship.style.left = square.offsetLeft + offsetX + "px";
-    ship.headSquare = square;
-    removeHighlight();
+  }
+
+  ship.style.top = square.offsetTop + offsetY + "px";
+  ship.style.left = square.offsetLeft + offsetX + "px";
+  ship.headSquare = square;
+  removeHighlight();
+  if (!small) {
     validateShipPlacement();
   }
+};
 
-  function returnShipToOriginalPosition() {
-    ship.style.top = origY + "px";
-    ship.style.left = origX + "px";
-    ship.headSquare = null;
-  }
+const returnShipToOriginalPosition = function (ship) {
+  ship.style.top = ship.origY + "px";
+  ship.style.left = ship.origX + "px";
+  ship.headSquare = null;
 };
 
 const clearOccupiedSquares = function () {
@@ -282,20 +311,7 @@ const validateShipPlacement = function () {
   if (allShipsPlaced) {
     console.log("All ships placed");
     setShipCoordinates();
-  }
-};
-
-const setShipCoordinates = function () {
-  const ships = document.querySelectorAll(".ship");
-  const length = ships.length;
-  const playerNum = gameState.playerTurnNum;
-
-  for (let i = 0; i < length; i++) {
-    const ship = ships[i];
-    const squares = getShipSquares(ship);
-    gameState[`player${playerNum}Board`].addShip(ship.id, ship.size, squares);
-  }
-  console.log(gameState[`player${playerNum}Board`]);
+  } else hideAcceptButton();
 };
 
 const getShipSquares = function (ship) {
@@ -305,10 +321,59 @@ const getShipSquares = function (ship) {
   const rowIndex = rows.indexOf(ship.headSquare.id[0]);
   for (let j = 0; j < ship.size; j++) {
     if (ship.classList.contains("vertical")) {
-      squares.push(document.getElementById(`${rows[rowIndex + j]}${column}`).id);
+      squares.push(
+        document.getElementById(`${rows[rowIndex + j]}${column}`).id
+      );
     } else {
-      squares.push(document.getElementById(`${rows[rowIndex]}${column + j}`).id);
+      squares.push(
+        document.getElementById(`${rows[rowIndex]}${column + j}`).id
+      );
     }
   }
   return squares;
+};
+
+const setShipCoordinates = function () {
+  const ships = document.querySelectorAll(".ship");
+  const length = ships.length;
+  const playerNum = gameState.playerTurnNum;
+  const playerBoard = gameState[`player${playerNum}Board`];
+  playerBoard.clearShips();
+
+  for (let i = 0; i < length; i++) {
+    const ship = ships[i];
+    if (ship.classList.contains("vertical")) {
+      ship.vertical = true;
+    } else ship.vertical = false;
+    const squares = getShipSquares(ship);
+    gameState[`player${playerNum}Board`].addShip(
+      ship.name,
+      ship.size,
+      ship.vertical,
+      squares
+    );
+  }
+  showAcceptButton();
+};
+
+const hideAcceptButton = function () {
+  let acceptButton;
+  acceptButton = document.getElementById("acceptButton");
+  if (acceptButton) {
+    acceptButton.style.display = "none";
+  }
+};
+
+const showAcceptButton = function () {
+  let acceptButton;
+  acceptButton = document.getElementById("acceptButton");
+  if (!acceptButton) {
+    acceptButton = document.createElement("button");
+    acceptButton.id = "acceptButton";
+    acceptButton.innerText = "Accept";
+    document.getElementById("shipPlacementContainer").append(acceptButton);
+    acceptButton.onclick = () => displayPassScreen();
+  } else {
+    acceptButton.style.display = "flex";
+  }
 };
