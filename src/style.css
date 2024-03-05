@@ -40,9 +40,10 @@ html, body {
 }
 
 #mainContainer {
-  max-height: 100dvh;
-  max-width: 100dvw;
+  height: 100dvh;
+  width: 100dvw;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: rgb(var(--white));
 }
