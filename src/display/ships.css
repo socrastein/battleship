@@ -2,11 +2,30 @@
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 #placeShipText {
   text-align: center;
   line-height: 1.2rem;
+}
+
+#acceptButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 25%;
+  height: 4rem;
+  width: 12rem;
+
+  background-color: lightgreen;
+
+  border: solid rgb(var(--black)) 2px;
+  border-radius: 1rem;
+
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .shipContainer {
@@ -21,14 +40,20 @@
   background-color: grey;
   border-radius: 1rem;
   border: solid black 2px;
+
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   user-select: none;
   overflow: hidden;
+  transition: background;
 
   touch-action: none;
+}
+
+.shipHighlight {
+  background-color: cyan;
 }
 
 .vertical {
@@ -45,36 +70,36 @@
   background-color: rgba(255, 0, 0, 0.5);
 }
 
-#Carrier {
+.Carrier {
   border-radius: 15% 0 50% 15%;
 }
 
-#Carrier.vertical {
+.Carrier.vertical {
   border-radius: 15% 15% 0 50%;
 }
 
-#Battleship {
+.Battleship {
   border-radius: 1rem 50% 50% 1rem;
 }
 
-#Battleship.vertical {
+.Battleship.vertical {
   border-radius: 50% 50% 1rem 1rem;
 }
-#Destroyer {
+.Destroyer {
   border-radius: 40% 50% 50% 40%;
 }
 
-#Destroyer.vertical {
+.Destroyer.vertical {
   border-radius: 50% 50% 40% 40%;
 }
-#Submarine {
+.Submarine {
   border-radius: 40%;
 }
 
-#Patrol {
+.Patrol {
   border-radius: 1rem 50% 50% 1rem;
 }
 
-#Patrol.vertical {
+.Patrol.vertical {
   border-radius: 1rem 1rem 50% 50%;
 }
