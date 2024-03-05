@@ -72,7 +72,7 @@ const displayNameInput = function (playerNumber) {
   field.id = "startInputField";
   field.placeholder = `Player ${playerNumber}`;
   field.addEventListener("keydown", (key) => {
-    if (key.code === "Enter") {
+    if (key.keyCode === 13) {
       if (field.value.length > 0) {
         enterPlayerName(field.value.trim());
       }

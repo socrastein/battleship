@@ -52,6 +52,7 @@
 
 #startInputLabel {
   font-size: 1.25rem;
+  color: rgb(var(--white));
 }
 
 #startInputField {
