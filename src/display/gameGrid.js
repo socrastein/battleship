@@ -1,27 +1,34 @@
 import "./gameGrid.css";
 import { squareClicked } from "../gameLoop";
 
-const columnLetters = " ABCDEFGHIJ";
+const rowLetters = " ABCDEFGHIJ";
 
 export default function createGrid(small = false) {
   const gridContainer = document.createElement("div");
-  gridContainer.id = "gridContainer";
 
-  gridContainer.appendChild(createColumnLabels());
+  if (small) {
+    gridContainer.id = "smallGridContainer";
+  } else {
+    gridContainer.id = "gridContainer";
+  }
+
+  if (!small) gridContainer.appendChild(createColumnLabels());
 
   for (let i = 1; i <= 10; i++) {
     const rowContainer = createRowContainer();
     for (let j = 0; j <= 11; j++) {
       if (j === 0 || j === 11) {
-        rowContainer.append(createRowLabel(columnLetters[i]));
+        if (!small) {
+          rowContainer.append(createRowLabel(rowLetters[i]));
+        }
         continue;
       }
-      rowContainer.append(createGridSquare(columnLetters[i], j));
+      rowContainer.append(createGridSquare(rowLetters[i], j, small));
     }
     gridContainer.append(rowContainer);
   }
 
-  gridContainer.appendChild(createColumnLabels());
+  if (!small) gridContainer.appendChild(createColumnLabels());
 
   return gridContainer;
 }
@@ -52,13 +59,13 @@ const createRowLabel = function (letter) {
   return newGridSquare;
 };
 
-const createGridSquare = function (column, row) {
+const createGridSquare = function (row, column, small = false) {
   const newGridSquare = document.createElement("div");
   newGridSquare.classList.add("gridSquare");
-  newGridSquare.id = `${column}${row}`;
-  newGridSquare.addEventListener("click", () => {
-    squareClicked(newGridSquare.id);
-  });
+  //Assign ID to .coord to avoid duplicates on firing screen with minimap grid
+  if (small) {
+    newGridSquare.dataset.coord = `${row}${column}`;
+  } else newGridSquare.id = `${row}${column}`;
 
   return newGridSquare;
 };
