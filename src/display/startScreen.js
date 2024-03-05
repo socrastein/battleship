@@ -1,10 +1,29 @@
 import "./startScreen.css";
 import { gameState, GameBoard } from "../gameState";
-import { startGame } from "../gameLoop";
+import { displayPassScreen } from "./passScreen";
 
 import shipImg from "../images/battleship.svg";
+import { gameLoop } from "../gameLoop";
 
-export const createStartScreen = function () {
+export const displayShipImage = function () {
+  const img = document.createElement("img");
+  img.id = "startImage";
+  img.src = shipImg;
+
+  return img;
+};
+
+export const displayTitle = function () {
+  const title = document.createElement("h1");
+  title.id = "startTitle";
+  title.textContent = "BATTLESHIP";
+
+  return title;
+};
+
+export const createStartScreen = function (test) {
+  const mainContainer = document.getElementById("mainContainer");
+
   const startContainer = document.createElement("div");
   startContainer.id = "startContainer";
 
@@ -13,13 +32,8 @@ export const createStartScreen = function () {
   const startTitleContainer = document.createElement("div");
   startTitleContainer.id = "startTitleContainer";
 
-  const startImage = document.createElement("img");
-  startImage.id = "startImage";
-  startImage.src = shipImg;
-
-  const startTitle = document.createElement("h1");
-  startTitle.id = "startTitle";
-  startTitle.textContent = "BATTLESHIP";
+  const startImage = displayShipImage();
+  const startTitle = displayTitle();
 
   startTitleContainer.append(startImage);
   startTitleContainer.append(startTitle);
@@ -41,7 +55,7 @@ export const createStartScreen = function () {
   startContainer.append(startTitleContainer);
   startContainer.append(startInputContainer);
 
-  return startContainer;
+  return mainContainer.append(startContainer);
 };
 
 const displayNameInput = function (playerNumber) {
@@ -88,6 +102,6 @@ const enterPlayerName = function (name) {
   }
   if (gameState.player2Name === undefined) {
     gameState.player2Name = name;
-    startGame();
+    displayPassScreen();
   }
 };
