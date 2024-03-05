@@ -9,7 +9,7 @@ export const gameState = {
   player2Board: undefined,
 
   playerTurnNum: undefined,
-  passTimer: 1,
+  passTimer: 5,
 };
 
 export const runTest = () => {
