@@ -1,29 +1,45 @@
-import { gameState, GameBoard } from "./gameState";
+import { gameState, GameBoard, runTest } from "./gameState";
 import createGrid from "./display/gameGrid";
-import { displayPlaceableShips, setShipDimensions } from "./display/ships";
+import { createStartScreen } from "./display/startScreen";
+import { displayPlaceableShips } from "./display/ships";
+import { displayFiringScreen } from "./display/firingScreen";
 
 const mainContainer = document.getElementById("mainContainer");
 
-export const startGame = function (test = false) {
+export const clearScreen = function () {
+  mainContainer.innerHTML = "";
+};
+
+export const gameLoop = function (test = false) {
   if (test) {
-    gameState.player1Name = "Matt";
-    gameState.player2Name = "Summer";
+    runTest();
+    console.log(gameState.player1Board);
+    console.log(gameState.player2Board);
   }
-  console.log("Beginning new game!");
-  console.log(`Player 1: ${gameState.player1Name}`);
-  console.log(`Player 2: ${gameState.player2Name}`);
-  gameState.player1Board = new GameBoard(gameState.player1Name);
-  gameState.player2Board = new GameBoard(gameState.player2Name);
-  gameState.playerTurnNum = 1;
+  clearScreen();
+  if (!gameState.player1Name) {
+    createStartScreen();
+    return;
+  }
 
+  if (!gameState.player1Board) {
+    setupShipPlacement(1);
+    return;
+  }
+
+  if (!gameState.player2Board) {
+    setupShipPlacement(2);
+    return;
+  }
+
+  displayFiringScreen();
+};
+
+const setupShipPlacement = function (playerNum) {
+  gameState.playerTurnNum = playerNum;
+  gameState[`player${playerNum}Board`] = new GameBoard(
+    gameState[`player${playerNum}Name`]
+  );
   mainContainer.append(createGrid());
-  mainContainer.append(displayPlaceableShips())
-  setShipDimensions();
-
+  displayPlaceableShips();
 };
-
-export const squareClicked = function (squareID) {
-  const square = document.getElementById(squareID);
-};
-
-const gameLoop = function () {};
