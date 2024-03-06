@@ -12,6 +12,16 @@ export const gameState = {
   passTimer: 5,
 };
 
+export const clearGameState = function () {
+  gameState.player1Name = undefined;
+  gameState.player1Board = undefined;
+
+  gameState.player2Name = undefined;
+  gameState.player2Board = undefined;
+
+  gameState.playerTurnNum = undefined;
+}
+
 export const runTest = () => {
   gameState.player1Name = "Player 1";
   gameState.player1Board = new GameBoard("Player 1");

@@ -3,6 +3,7 @@ import createGrid from "./gameGrid";
 import { gameState } from "../gameState";
 import { createShip, setShipDimensions, snapToClosestSquare } from "./ships";
 import { displayPassScreen } from "./passScreen";
+import { showEndScreen } from "./endScreen";
 
 const mainContainer = document.getElementById("mainContainer");
 
@@ -204,7 +205,7 @@ const showFireConfirmation = function (square) {
   statusFire.append(fireButton);
 };
 
-const showFireStatus = function (message) {
+const showFireStatus = function (message, showButton = true) {
   console.log(message);
   const statusFire = document.getElementById("statusFire");
   statusFire.innerHTML = "";
@@ -222,7 +223,7 @@ const showFireStatus = function (message) {
   };
 
   statusFire.append(messageContainer);
-  statusFire.append(button);
+  if (showButton) statusFire.append(button);
 };
 
 let selectedSquare;
@@ -256,7 +257,14 @@ const verifyShot = (squareID) => {
       hit = true;
       message = `Direct hit on enemy ${ship.name}!`;
       if (ship.isSunk) {
-        message += `\nThe ${ship.name} has sunk.`;
+        message = `\nHit! You sunk their ${ship.name}`;
+        if (enemyBoard.shipsAreSunk()) {
+          showFireStatus(message, false);
+
+          setTimeout(() => {
+            showEndScreen(gameState[`player${gameState.playerTurnNum}Name`]);
+          }, 2500);
+        }
       }
       break;
     }

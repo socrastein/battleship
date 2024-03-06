@@ -13,8 +13,6 @@ export const clearScreen = function () {
 export const gameLoop = function (test = false) {
   if (test) {
     runTest();
-    console.log(gameState.player1Board);
-    console.log(gameState.player2Board);
   }
   clearScreen();
   if (!gameState.player1Name) {
