@@ -23,6 +23,13 @@ const setPlayerBoards = function () {
 
 export const displayFiringScreen = function () {
   setPlayerBoards();
+
+  const nameDiv = document.createElement("div");
+  nameDiv.id = "statusName";
+  nameDiv.innerText = gameState[`player${gameState.playerTurnNum}Name`];
+
+  mainContainer.append(nameDiv);
+
   mainContainer.append(createGrid());
   attachClickEventsToGrid();
   showPlayerShots();
@@ -71,12 +78,6 @@ const createTopHud = function () {
 const showPlayerStatus = function (playerNum) {
   const playerStatusContainer = document.createElement("div");
   playerStatusContainer.id = "playerStatusContainer";
-
-  const nameDiv = document.createElement("div");
-  nameDiv.id = "statusName";
-  nameDiv.innerText = gameState[`player${playerNum}Name`];
-
-  playerStatusContainer.append(nameDiv);
 
   const shipsDiv = document.createElement("div");
   shipsDiv.id = "statusShips";
@@ -257,13 +258,15 @@ const verifyShot = (squareID) => {
       hit = true;
       message = `Direct hit on enemy ${ship.name}!`;
       if (ship.isSunk) {
-        message = `\nHit! You sunk their ${ship.name}`;
+        message = `\nEnemy ${ship.name} destroyed!`;
         if (enemyBoard.shipsAreSunk()) {
           showFireStatus(message, false);
 
           setTimeout(() => {
             showEndScreen(gameState[`player${gameState.playerTurnNum}Name`]);
           }, 2500);
+          setSquareResult(square, hit);
+          return;
         }
       }
       break;
