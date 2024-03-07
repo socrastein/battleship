@@ -68,8 +68,8 @@ if (isMobile()) {
 }
 console.log("Mobile: " + gameState.isMobile);
 
-//Gameboard objects
-//#region
+// Gameboard objects
+// #region
 
 export const GameBoard = function (ownerName) {
   this.owner = ownerName;
@@ -79,7 +79,7 @@ export const GameBoard = function (ownerName) {
 };
 
 GameBoard.prototype.addShip = function (name, size, vertical, locationArray) {
-  const ship = new Ship(name, size, vertical);
+  const ship = new Ship(name, size, vertical = false);
   ship.setLocation(locationArray);
   this.ships.push(ship);
 };
@@ -110,10 +110,12 @@ GameBoard.prototype.sendAttack = function (gameboard, square) {
 };
 
 GameBoard.prototype.shipsAreSunk = function () {
+  let allSunk = true;
   this.ships.forEach((ship) => {
-    if (!ship.isSunk) return false;
+    console.log(ship);
+    if (!ship.isSunk) allSunk = false;
   });
-  return true;
+  return allSunk;
 };
 
 //#endregion
@@ -121,7 +123,7 @@ GameBoard.prototype.shipsAreSunk = function () {
 //Ship objects
 //#region
 
-const Ship = function (name, size, vertical) {
+export const Ship = function (name, size, vertical) {
   this.name = name;
   this.size = size;
   this.vertical = vertical;
