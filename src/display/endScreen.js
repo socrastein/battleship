@@ -15,7 +15,7 @@ export const showEndScreen = function (winnerName) {
 
   const passMessage = document.createElement("div");
   passMessage.id = "passScreenMessage";
-  passMessage.innerText = `Game Over\n${winnerName} has destroyed the enemy fleet!`;
+  passMessage.innerText = `GAME OVER\n\n${winnerName} has destroyed the enemy fleet!`;
   passMessage.style.fontSize = "1.5rem";
 
   const mainMenuButton = document.createElement("button");
