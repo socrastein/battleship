@@ -1,31 +1,39 @@
+#statusName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--white));
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.25rem;
+  background-image: radial-gradient(
+    rgba(8, 8, 100, 0.8),
+    rgba(8, 50, 150, 0.5)
+  );
+}
+
 #playerHudContainer {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   margin: 0 auto;
   height: 50%;
   width: min(100%, 40rem);
 }
 
 #topHudContainer {
-  padding: 0 2%;
+  margin-top: 1rem;
+  padding: 0 1rem;
   display: flex;
-  justify-content: center;
-  max-height: 100%;
+  justify-content: space-between;
 }
 
 #playerStatusContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  /* align-items: center; */
+  gap: 0.25rem;
   width: 50%;
-}
-
-#statusName {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
 }
 
 .selectedSquare {
@@ -56,9 +64,10 @@
   width: 100%;
   height: 100%;
   justify-content: space-evenly;
-  padding: 0 2rem;
+  padding: 0 0.25rem;
 
-  font-size: 1.75rem;
+  font-size: 1.25rem;
+  text-align: center;
 }
 
 #statusFireSquare,
@@ -70,8 +79,8 @@
   border: solid rgb(var(--black)) 2px;
   border-radius: 1rem;
 
-  height: 50%;
-  aspect-ratio: 1;
+  height: 4rem;
+  width: 5rem;
 
   color: rgb(var(--white));
   font-weight: bold;
@@ -95,7 +104,7 @@
   display: flex;
   align-items: center;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.25rem;
 }
 
 #endTurnButton {
@@ -103,9 +112,9 @@
   border-radius: 1rem;
   background-color: lightgreen;
 
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
 
-  height: 4rem;
-  width: 12rem;
+  height: 3rem;
+  width: 10rem;
 }
