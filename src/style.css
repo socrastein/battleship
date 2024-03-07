@@ -9,7 +9,7 @@
   box-sizing: border-box;
   color: rgb(var(--black));
   background-color: transparent;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
 @font-face {
@@ -35,8 +35,9 @@
   }
 }
 
-html, body {
-  overscroll-behavior: none
+html,
+body {
+  overscroll-behavior: none;
 }
 
 #mainContainer {
@@ -45,5 +46,6 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: rgb(var(--white));
+  align-items: center;
+  background-image: linear-gradient(lightblue, darkblue);
 }

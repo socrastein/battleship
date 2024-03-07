@@ -7,8 +7,6 @@
   align-items: center;
   gap: 2rem;
   padding: 1rem;
-
-  background-image: linear-gradient(lightblue, blue);
 }
 
 #startTitleContainer {

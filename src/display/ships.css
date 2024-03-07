@@ -1,9 +1,11 @@
 #shipPlacementContainer {
+  width: min(100%, 30rem);
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   align-items: center;
+  background-color: rgb(var(--white));
 }
 
 #placeShipText {
