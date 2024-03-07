@@ -79,7 +79,7 @@ export const GameBoard = function (ownerName) {
 };
 
 GameBoard.prototype.addShip = function (name, size, vertical, locationArray) {
-  const ship = new Ship(name, size, vertical = false);
+  const ship = new Ship(name, size, vertical);
   ship.setLocation(locationArray);
   this.ships.push(ship);
 };
