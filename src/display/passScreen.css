@@ -13,19 +13,17 @@
     rgba(8, 50, 150, 0.5)
   );
 
-  gap: 2rem;
+  gap: 3rem;
 }
 
 #passScreenMessage {
   color: rgb(var(--white));
-  margin-top: 4rem;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   text-align: center;
 }
 
 #passScreenButton {
-  margin-top: 4rem;
   height: 6rem;
   width: 16rem;
 
