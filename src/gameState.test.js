@@ -1,4 +1,4 @@
-const { Ship, GameBoard } = require("./gameState");
+import { Ship, GameBoard } from "./gameState";
 
 describe("Ship: create and take hits", () => {
   test("Correctly sets name and size of new ship", () => {
@@ -22,6 +22,17 @@ describe("Ship: create and take hits", () => {
     expect(testShip.isSunk).toBe(false);
     testShip.takeHit();
     expect(testShip.isSunk).toBe(true);
+  });
+
+  test("Verifies that all ships are sunk", () => {
+    const testBoard = new GameBoard();
+    const testShip1 = new Ship("Test1", 3);
+    const testShip2 = new Ship("Test2", 5);
+
+    testShip1.isSunk = true;
+    expect(testBoard.shipsAreSunk()).toBe(false);
+    testShip2.isSunk = true;
+    expect(testBoard.shipsAreSunk()).toBe(true);
   });
 });
 
