@@ -1,40 +1,28 @@
 #gridContainer,
 #smallGridContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  flex-wrap: nowrap;
+  aspect-ratio: 1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+
   background-image: linear-gradient(
     0deg,
     rgba(8, 8, 100, 0.8),
     rgba(8, 50, 150, 0.5)
   );
 }
-#gridContainer {
-  height: 45%;
-}
 
 #smallGridContainer {
-  flex: 1 1;
-  padding: 2px;
-}
-
-.rowContainer {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  flex: 1;
-  background-color: transparent;
+  grid-template-columns: repeat(10, 1fr);
+  max-width: 50%;
 }
 
 .gridSquare,
 .gridLabel {
-  /* box-shadow: 0 1px 1px 1px rgba(255,255,255,.5); */
   display: flex;
   justify-content: center;
   align-items: center;
   aspect-ratio: 1;
-  max-width: min(9vw, 50px);
+
   user-select: none;
 
   font-size: 0.75rem;
