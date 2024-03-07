@@ -2,6 +2,7 @@
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   align-items: center;
 }
 
@@ -15,7 +16,7 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 25%;
+  bottom: 10%;
   height: 4rem;
   width: 12rem;
 
@@ -30,9 +31,10 @@
 
 .shipContainer {
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   align-items: center;
-  height: 3rem;
+  max-height: 3rem;
 }
 
 .ship {
@@ -44,10 +46,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   user-select: none;
   overflow: hidden;
-  transition: background;
 
   touch-action: none;
 }
@@ -86,11 +87,11 @@
   border-radius: 50% 50% 1rem 1rem;
 }
 .Destroyer {
-  border-radius: 40% 50% 50% 40%;
+  border-radius: 1rem 50% 50% 1rem;
 }
 
 .Destroyer.vertical {
-  border-radius: 50% 50% 40% 40%;
+  border-radius: 50% 50% 1rem 1rem;
 }
 .Submarine {
   border-radius: 40%;
