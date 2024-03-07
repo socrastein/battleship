@@ -30,6 +30,10 @@ export const gameLoop = function (test = false) {
     return;
   }
 
+  if (test) {
+    console.log(gameState.player1Board);
+    console.log(gameState.player2Board);
+  }
   displayFiringScreen();
 };
 
